@@ -11,4 +11,5 @@ public class IKTargetSettingsSO : ScriptableObject {
     public float movementVectorResetSpeed;
     public float restRadius;
     public AnimationCurve stepHeightCurve;
+    public LayerMask rayCastTargetLayer;
 }

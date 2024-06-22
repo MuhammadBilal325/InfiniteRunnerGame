@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: IKTargetSettings
   m_EditorClassIdentifier: 
   stepDistance: 0.5
-  stepHeight: 0.5
+  stepHeight: 0.6
   speed: 5
-  rayVerticalOffset: 10
-  globalMovementVectorMultiplier: 9
-  movementVectorResetSpeed: 6
-  restRadius: 4
+  rayVerticalOffset: 3
+  globalMovementVectorMultiplier: 2.5
+  movementVectorResetSpeed: 3
+  restRadius: 1
   stepHeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -52,3 +52,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rayCastTargetLayer:
+    serializedVersion: 2
+    m_Bits: 8

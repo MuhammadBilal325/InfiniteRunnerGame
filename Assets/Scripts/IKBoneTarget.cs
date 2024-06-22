@@ -24,6 +24,7 @@ public class IKBoneTarget : MonoBehaviour {
     private Vector3 oldPosition;
     private Vector3 restPosition;
     private bool isMoving = false;
+    private bool isResting = false;
 
     private void Start() {
         offsetVector += transform.position - body.position;
@@ -41,35 +42,48 @@ public class IKBoneTarget : MonoBehaviour {
     private void Update() {
         transform.position = currentPosition;
         if (!isMoving) {
+            if (lerpToOffset) {
+                if (Vector3.Distance(body.position, restPosition) > ikTargetSettings.restRadius) {
+                    isResting = false;
+                }
+                else {
+                    isResting = true;
+                }
+            }
+            else {
+                isResting = false;
+            }
             //Calculate the movementVector to add onto the raycastOrigin to make sure legs dont lag behind or go in front
-            //Vector2 inputVector = GameInput.Instance.GetMovementInput();
-            //if (inputVector == Vector2.zero) {
-            //    movementVector = Vector3.zero;
+            //movementVector only matters on X axis
+            int movement = (int)GameInput.Instance.GetMovementInput();
 
-            //}
-            //else {
-            //    movementVector = new Vector3(inputVector.x, 0, inputVector.y);
-            //    movementVector *= ikTargetSettings.globalMovementVectorMultiplier;
-            //}
+            if (movement == 0) {
+                movementVector = Vector3.zero;
+            }
+            else {
+                movementVector = new Vector3(movement, 0, 0);
+                movementVector *= ikTargetSettings.globalMovementVectorMultiplier;
+            }
+            if (!isResting) {
+                Vector3 rayOrigin = body.position + offsetVector + movementVector;
+                rayOrigin.y += ikTargetSettings.rayVerticalOffset;
+                Ray ray = new Ray(rayOrigin, Vector3.down);
+                if (Physics.Raycast(ray, out RaycastHit info, ikTargetSettings.rayVerticalOffset + 3, ikTargetSettings.rayCastTargetLayer)) {
+                    //If the player has moved a certain distance from the old position, the leg will move to the new position
+                    if (Vector3.Distance(newPosition, info.point) > ikTargetSettings.stepDistance) {
+                        newPosition = info.point;
+                        lerp = 0f;
+                        lerpToOffset = false;
+                    }
+                    //If the player has stood still for a while this condition will run
+                    if (movement == 0 && !lerpToOffset) {
+                        newPosition = info.point;
+                        lerp = 0f;
+                        lerpToOffset = true;
+                        restPosition = body.position;
+                    }
 
-            Vector3 rayOrigin = body.position + offsetVector + movementVector;
-            rayOrigin.y += ikTargetSettings.rayVerticalOffset;
-            Ray ray = new Ray(rayOrigin, Vector3.down);
-            if (Physics.Raycast(ray, out RaycastHit info, ikTargetSettings.rayVerticalOffset + 3)) {
-                //If the player has moved a certain distance from the old position, the leg will move to the new position
-                if (Vector3.Distance(newPosition, info.point) > ikTargetSettings.stepDistance) {
-                    newPosition = info.point;
-                    lerp = 0f;
-                    lerpToOffset = false;
                 }
-                //If the player has stood still for a while this condition will run
-                if (!lerpToOffset) {
-                    newPosition = info.point;
-                    lerp = 0f;
-                    lerpToOffset = true;
-                    restPosition = body.position;
-                }
-
             }
         }
         //Animation of leg
@@ -96,10 +110,8 @@ public class IKBoneTarget : MonoBehaviour {
 
     private void OnDrawGizmos() {
         //Gizmos.color = UnityEngine.Color.red;
-        //Gizmos.DrawSphere(oldPosition, 1f);
+        ////Gizmos.DrawSphere(oldPosition, 1f);
         //Gizmos.color = UnityEngine.Color.green;
-        //Gizmos.DrawSphere(newPosition, 1f);
-        //Gizmos.color = UnityEngine.Color.magenta;
-
+        //Gizmos.DrawSphere(newPosition, 0.1f);
     }
 }
