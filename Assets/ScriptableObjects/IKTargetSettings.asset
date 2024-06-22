@@ -15,10 +15,11 @@ MonoBehaviour:
   stepDistance: 0.5
   stepHeight: 0.6
   speed: 5
-  rayVerticalOffset: 3
-  globalMovementVectorMultiplier: 2.5
+  rayVerticalOffset: 1.72
+  globalMovementVectorMultiplier: 4.92
   movementVectorResetSpeed: 3
-  restRadius: 1
+  restRadius: 0.75
+  rayEndLerp: 0.5
   stepHeightCurve:
     serializedVersion: 2
     m_Curve:

@@ -66,8 +66,12 @@ public class IKBoneTarget : MonoBehaviour {
             }
             if (!isResting) {
                 Vector3 rayOrigin = body.position + offsetVector + movementVector;
+                Vector3 rayEnd = Vector3.Lerp(rayOrigin, body.position, ikTargetSettings.rayEndLerp);
                 rayOrigin.y += ikTargetSettings.rayVerticalOffset;
-                Ray ray = new Ray(rayOrigin, Vector3.down);
+                rayEnd = rayEnd - rayOrigin;
+                //Lerp between the bodies position and a position straight down
+                Ray ray = new Ray(rayOrigin, rayEnd);
+                //Debug.DrawRay(rayOrigin, rayEnd, UnityEngine.Color.red);
                 if (Physics.Raycast(ray, out RaycastHit info, ikTargetSettings.rayVerticalOffset + 3, ikTargetSettings.rayCastTargetLayer)) {
                     //If the player has moved a certain distance from the old position, the leg will move to the new position
                     if (Vector3.Distance(newPosition, info.point) > ikTargetSettings.stepDistance) {
