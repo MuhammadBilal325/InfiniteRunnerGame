@@ -56,7 +56,6 @@ public class IKBoneTarget : MonoBehaviour {
             //Calculate the movementVector to add onto the raycastOrigin to make sure legs dont lag behind or go in front
             //movementVector only matters on X axis
             int movement = (int)GameInput.Instance.GetMovementInput();
-
             if (movement == 0) {
                 movementVector = Vector3.zero;
             }

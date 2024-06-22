@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    public static Player Instance { get; private set; }
     [SerializeField] private float playerSpeed;
     [SerializeField] private float jumpHeight;
     [SerializeField] private LayerMask groundLayer;
@@ -13,8 +14,13 @@ public class Player : MonoBehaviour {
     private Vector3 movement;
     private bool isGrounded;
 
+    private void Awake() {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start() {
+
         rb = GetComponent<Rigidbody>();
         GameInput.Instance.JumpInputPressed += GameInput_JumpInputPressed;
     }
