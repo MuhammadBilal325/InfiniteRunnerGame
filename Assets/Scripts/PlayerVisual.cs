@@ -30,7 +30,7 @@ public class PlayerVisual : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
-        int input = (int)GameInput.Instance.GetMovementInput();
+        int input = Player.Instance.GetMovementDirection();
         animator.SetInteger(MOVEMENT_INPUT, input);
     }
     private void Attack1Visual() {

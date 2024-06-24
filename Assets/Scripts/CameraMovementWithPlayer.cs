@@ -8,30 +8,33 @@ public class CameraMovementWithPlayer : MonoBehaviour {
     [SerializeField] private float safeDistance = 0;
     [SerializeField] private Transform shakeEmpty;
     private float xOffset = 0;
+    private float yOffset = 0;
     private float validMaxPlayerPos;
     private float validMinPlayerPos;
-    private float adjustment = 0f;
+    private float xAdjustment = 0f;
+    private float yAdjustment = 0f;
     private Coroutine cameraShakeRoutine;
     private void Awake() {
         Instance = this;
     }
     private void Start() {
         xOffset = Player.position.x - transform.position.x;
+        yOffset = Player.position.y - transform.position.y;
     }
 
     private void FixedUpdate() {
         validMaxPlayerPos = transform.position.x + xOffset + safeDistance;
         validMinPlayerPos = transform.position.x + xOffset - safeDistance;
         if (Player.transform.position.x > validMaxPlayerPos) {
-            adjustment = Player.transform.position.x - validMaxPlayerPos;
+            xAdjustment = Player.transform.position.x - validMaxPlayerPos;
         }
         else if (Player.transform.position.x < validMinPlayerPos) {
-            adjustment = Player.transform.position.x - validMinPlayerPos;
+            xAdjustment = Player.transform.position.x - validMinPlayerPos;
         }
         else
-            adjustment = 0;
-        if (adjustment != 0)
-            transform.position = new Vector3(transform.position.x + adjustment, transform.position.y, transform.position.z);
+            xAdjustment = 0;
+
+        transform.position = new Vector3(transform.position.x + xAdjustment, Player.position.y - yOffset, transform.position.z);
     }
 
     public void ShakeCamera(float duration, float magnitude) {
