@@ -47,4 +47,7 @@ public class GameInput : MonoBehaviour {
     public float GetMovementInput() {
         return playerInputActions.Player.Move.ReadValue<float>();
     }
+    public int GetSprintInput() {
+        return (int)playerInputActions.Player.Sprint.ReadValue<float>();
+    }
 }

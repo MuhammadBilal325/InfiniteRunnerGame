@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float attack2ResetTime;
     private float attackCooldown = 0f;
     [SerializeField] private float playerSpeed;
+    [SerializeField] private float sprintSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AttackListSO attackList;
@@ -87,7 +88,7 @@ public class Player : MonoBehaviour {
         movement = new Vector3(GameInput.Instance.GetMovementInput(), 0, 0);
         direction = PointerXRelativeToPlayer();
         if (state != State.JumpingUp)
-            state = Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, 1.1f, groundLayer) ? State.Grounded : state;
+            state = Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, 1.1f, groundLayer) ? State.Grounded : State.JumpingDown;
     }
 
     private void FixedUpdate() {
@@ -119,7 +120,12 @@ public class Player : MonoBehaviour {
     private void HandleMovement() {
         oldPosition = transform.position;
         //Simulate horizontal movement
-        characterController.Move(movement * playerSpeed * Time.deltaTime);
+        if (IsSprinting()) {
+            characterController.Move(movement * sprintSpeed * Time.deltaTime);
+        }
+        else {
+            characterController.Move(movement * playerSpeed * Time.deltaTime);
+        }
         newPosition = transform.position;
         newPosition.z = oldPosition.z;
         newPosition.y = oldPosition.y;
@@ -150,6 +156,9 @@ public class Player : MonoBehaviour {
     }
     public int GetMovementDirection() {
         return (int)GameInput.Instance.GetMovementInput() * direction;
+    }
+    public bool IsSprinting() {
+        return GameInput.Instance.GetSprintInput() > 0;
     }
     private int PointerXRelativeToPlayer() {
         Vector3 pointer = Input.mousePosition;

@@ -12,6 +12,7 @@ public class PlayerVisual : MonoBehaviour {
     private string ATTACK1_TRIGGER = "Attack1";
     private string ATTACK2_TRIGGER = "Attack2";
     private string ATTACK2_STATE = "Attack2State";
+    private string SPRINT_PARAMETER = "SprintMultiplier";
     private int attack2State = 0;
     private Coroutine attackSwordTrailCoroutine = null;
     private void Start() {
@@ -32,6 +33,13 @@ public class PlayerVisual : MonoBehaviour {
     private void Update() {
         int input = Player.Instance.GetMovementDirection();
         animator.SetInteger(MOVEMENT_INPUT, input);
+        bool isSprinting = Player.Instance.IsSprinting();
+        if (isSprinting) {
+            animator.SetFloat(SPRINT_PARAMETER, 2f);
+        }
+        else {
+            animator.SetFloat(SPRINT_PARAMETER, 1f);
+        }
     }
     private void Attack1Visual() {
         animator.SetTrigger(ATTACK1_TRIGGER);
