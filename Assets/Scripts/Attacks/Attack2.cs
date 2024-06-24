@@ -25,8 +25,8 @@ public class Attack2 : BaseAttack {
     }
 
     public override void Hit(IHittable hittable) {
-        Debug.Log(GetName() + " hit " + hittable);
         hittable.OnHit(this);
+        CameraMovementWithPlayer.Instance.ShakeCamera(0.1f, 0.1f);
         Destroy(gameObject);
     }
 }

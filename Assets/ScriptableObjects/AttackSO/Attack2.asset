@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Attack2
   m_EditorClassIdentifier: 
   prefab: {fileID: 5572611542005740562, guid: dd2a72c3c1d1f1d4bb7e58b2d14c7127, type: 3}
+  damage: 20
   Sprite: {fileID: 0}
   attackName: Sword Swing

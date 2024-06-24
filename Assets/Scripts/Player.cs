@@ -5,6 +5,12 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+
+    private enum State {
+        Grounded,
+        JumpingUp,
+        JumpingDown,
+    }
     public static Player Instance { get; private set; }
     public event EventHandler Attack1Pressed;
     public event EventHandler Attack2Pressed;
@@ -12,24 +18,28 @@ public class Player : MonoBehaviour {
     [SerializeField] private float attack2ResetTime;
     private float attackCooldown = 0f;
     [SerializeField] private float playerSpeed;
-    [SerializeField] private float jumpHeight;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float fallMultiplier = 2.5f; // Multiplier to increase fall speed
-    [SerializeField] private float lowJumpMultiplier = 2.0f; // Multiplier to make jumps more responsive
     [SerializeField] private AttackListSO attackList;
     [SerializeField] private Transform attackPoint;
-    Coroutine attackCoroutine;
-    private Rigidbody rb;
+    [SerializeField] private Vector3 gravity;
+    [SerializeField] private Vector3 jumpVector;
+    [SerializeField] private float jumpDamping;
+    [SerializeField] private float gravityDamping;
+    private CharacterController characterController;
+    private float jumpLerp = 1f;
+    private float gravityLerp = 1f;
     private Vector3 movement;
-    private bool isGrounded;
-
+    private Vector3 oldPosition;
+    private Vector3 newPosition;
+    private State state;
     private void Awake() {
         Instance = this;
     }
 
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody>();
+        state = State.Grounded;
+        characterController = GetComponent<CharacterController>();
         GameInput.Instance.JumpInputPressed += GameInput_JumpInputPressed;
         GameInput.Instance.Attack1Pressed += GameInput_Attack1Pressed;
         GameInput.Instance.Attack2Pressed += GameInput_Attack2Pressed;
@@ -50,8 +60,9 @@ public class Player : MonoBehaviour {
     }
 
     private void GameInput_JumpInputPressed(object sender, System.EventArgs e) {
-        if (isGrounded) {
-            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+        if (state == State.Grounded) {
+            state = State.JumpingUp;
+            jumpLerp = 1f;
         }
     }
 
@@ -61,19 +72,39 @@ public class Player : MonoBehaviour {
             attackCooldown -= Time.deltaTime;
         }
         movement = new Vector3(GameInput.Instance.GetMovementInput(), 0, 0);
-        isGrounded = Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, 1.1f, groundLayer);
+        if (state != State.JumpingUp)
+            state = Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, 1.1f, groundLayer) ? State.Grounded : state;
     }
 
     private void FixedUpdate() {
-        rb.velocity = new Vector3(movement.x * 200 * playerSpeed * Time.fixedDeltaTime, rb.velocity.y, rb.velocity.z);
-        // Apply fall multiplier if the player is falling
-        if (rb.velocity.y < 0) {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        HandleMovement();
+    }
+    private void HandleMovement() {
+        oldPosition = transform.position;
+        //Simulate horizontal movement
+        characterController.Move(movement * playerSpeed * Time.deltaTime);
+        newPosition = transform.position;
+        newPosition.z = oldPosition.z;
+        newPosition.y = oldPosition.y;
+        //Simulate vertical movement with inverse velocity if player is jumping up
+        if (state == State.JumpingUp) {
+            characterController.Move(jumpLerp * jumpVector);
+            jumpLerp -= jumpDamping * Time.deltaTime;
+            if (jumpLerp <= 0) {
+                state = State.JumpingDown;
+                gravityLerp = 1f;
+            }
         }
-        // Apply low jump multiplier if the player is jumping
-        else if (rb.velocity.y > 0) {
-            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        else if (state == State.JumpingDown) {
+            characterController.Move(gravity * gravityLerp * Time.deltaTime);
+            gravityLerp += gravityDamping * Time.deltaTime;
+
         }
+        else {
+            characterController.Move(gravity * Time.deltaTime);
+        }
+        newPosition.y = transform.position.y;
+        transform.position = newPosition;
     }
     private void Attack1() {
         Attack1Pressed?.Invoke(this, EventArgs.Empty);
@@ -84,6 +115,4 @@ public class Player : MonoBehaviour {
         Attack2Pressed?.Invoke(this, EventArgs.Empty);
         Instantiate(attackList.attacks[1].prefab, attackPoint.position, Quaternion.identity);
     }
-
-
 }

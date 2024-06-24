@@ -21,8 +21,15 @@ public class GameInput : MonoBehaviour {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Jump.performed += Jump_performed;
         playerInputActions.Player.Attack.performed += Attack_performed;
-        playerInputActions.Player.Attack2.performed += Attack2_performed; ;
+        playerInputActions.Player.Attack2.performed += Attack2_performed;
         playerInputActions.Player.Enable();
+    }
+
+    private void OnDestroy() {
+        playerInputActions.Player.Jump.performed -= Jump_performed;
+        playerInputActions.Player.Attack.performed -= Attack_performed;
+        playerInputActions.Player.Attack2.performed -= Attack2_performed;
+        playerInputActions.Dispose();
     }
 
     private void Attack2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {

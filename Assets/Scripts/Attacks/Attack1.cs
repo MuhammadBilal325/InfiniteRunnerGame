@@ -14,6 +14,8 @@ public class Attack1 : BaseAttack {
         if (movement == 1) {
             addSpeed = 2;
         }
+        //Shake Camera on Spawn
+        CameraMovementWithPlayer.Instance.ShakeCamera(0.1f, 0.1f);
     }
 
     // Update is called once per frame
@@ -31,7 +33,6 @@ public class Attack1 : BaseAttack {
     }
 
     public override void Hit(IHittable hittable) {
-        Debug.Log(GetName() + " hit " + hittable);
         hittable.OnHit(this);
         Destroy(gameObject);
     }

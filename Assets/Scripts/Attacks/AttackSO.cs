@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AttackSO : ScriptableObject {
     public Transform prefab;
+    public float damage;
     public Sprite Sprite;
     public string attackName;
 
