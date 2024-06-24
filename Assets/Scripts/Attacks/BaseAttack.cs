@@ -12,4 +12,12 @@ public class BaseAttack : MonoBehaviour {
     public float GetDamage() {
         return damage;
     }
+
+    public AttackSO GetAttackSO() {
+        return attackSO;
+    }
+
+    public string GetName() {
+        return attackSO.attackName;
+    }
 }

@@ -7,6 +7,7 @@ public class GameInput : MonoBehaviour {
 
     public event EventHandler JumpInputPressed;
     public event EventHandler Attack1Pressed;
+    public event EventHandler Attack2Pressed;
     public static GameInput Instance { get; private set; }
     private PlayerInputActions playerInputActions;
     // Start is called before the first frame update
@@ -20,7 +21,12 @@ public class GameInput : MonoBehaviour {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Jump.performed += Jump_performed;
         playerInputActions.Player.Attack.performed += Attack_performed;
+        playerInputActions.Player.Attack2.performed += Attack2_performed; ;
         playerInputActions.Player.Enable();
+    }
+
+    private void Attack2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        Attack2Pressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {

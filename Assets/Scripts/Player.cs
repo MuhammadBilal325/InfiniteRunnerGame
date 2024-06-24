@@ -7,9 +7,10 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public static Player Instance { get; private set; }
     public event EventHandler Attack1Pressed;
+    public event EventHandler Attack2Pressed;
     [SerializeField] private float attack1ResetTime;
-    [SerializeField] private float attack1Delay;
-    private float attack1Cooldown = 0f;
+    [SerializeField] private float attack2ResetTime;
+    private float attackCooldown = 0f;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float jumpHeight;
     [SerializeField] private LayerMask groundLayer;
@@ -31,11 +32,19 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         GameInput.Instance.JumpInputPressed += GameInput_JumpInputPressed;
         GameInput.Instance.Attack1Pressed += GameInput_Attack1Pressed;
+        GameInput.Instance.Attack2Pressed += GameInput_Attack2Pressed;
+    }
+
+    private void GameInput_Attack2Pressed(object sender, EventArgs e) {
+        if (attackCooldown <= 0) {
+            attackCooldown = attack2ResetTime;
+            Attack2();
+        }
     }
 
     private void GameInput_Attack1Pressed(object sender, EventArgs e) {
-        if (attack1Cooldown <= 0) {
-            attack1Cooldown = attack1ResetTime;
+        if (attackCooldown <= 0) {
+            attackCooldown = attack1ResetTime;
             Attack1();
         }
     }
@@ -48,8 +57,8 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (attack1Cooldown > 0) {
-            attack1Cooldown -= Time.deltaTime;
+        if (attackCooldown > 0) {
+            attackCooldown -= Time.deltaTime;
         }
         movement = new Vector3(GameInput.Instance.GetMovementInput(), 0, 0);
         isGrounded = Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, 1.1f, groundLayer);
@@ -68,13 +77,13 @@ public class Player : MonoBehaviour {
     }
     private void Attack1() {
         Attack1Pressed?.Invoke(this, EventArgs.Empty);
-        if (attackCoroutine == null) {
-            attackCoroutine = StartCoroutine(WaitAndInstantiate(attack1Delay, attackList.attacks[0].prefab, attackPoint, Quaternion.identity));
-        }
+        Instantiate(attackList.attacks[0].prefab, attackPoint.position, Quaternion.identity);
     }
-    IEnumerator WaitAndInstantiate(float secondsToWait, Transform objectToInstantiate, Transform objectToInstantiateOn, Quaternion rotation) {
-        yield return new WaitForSeconds(secondsToWait);
-        Instantiate(objectToInstantiate, objectToInstantiateOn.position, rotation);
-        attackCoroutine = null;
+
+    private void Attack2() {
+        Attack2Pressed?.Invoke(this, EventArgs.Empty);
+        Instantiate(attackList.attacks[1].prefab, attackPoint.position, Quaternion.identity);
     }
+
+
 }
