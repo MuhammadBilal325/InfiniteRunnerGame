@@ -13,7 +13,6 @@ public class LookAtCamera : MonoBehaviour {
 
     [SerializeField] private Mode mode;
     private void LateUpdate() {
-
         switch (mode) {
             case Mode.LookAt:
                 transform.LookAt(Camera.main.transform);
