@@ -6,7 +6,7 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour, IHittable {
     // Start is called before the first frame update
     public event EventHandler OnHitEvent;
-    [SerializeField] private float health = 100;
+    [SerializeField] private float health;
     private float maxHealth;
 
     public virtual void Awake() {
