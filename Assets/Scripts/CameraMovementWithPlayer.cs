@@ -21,7 +21,7 @@ public class CameraMovementWithPlayer : MonoBehaviour {
         yOffset = Player.position.y - transform.position.y;
     }
 
-    private void FixedUpdate() {
+    private void LateUpdate() {
         validMaxPlayerPos = transform.position.x + xOffset + safeDistance;
         validMinPlayerPos = transform.position.x + xOffset - safeDistance;
         if (Player.transform.position.x > validMaxPlayerPos) {

@@ -8,5 +8,5 @@ public class AttackSO : ScriptableObject {
     public float damage;
     public Sprite Sprite;
     public string attackName;
-
+    public bool hasHitPause = false;
 }

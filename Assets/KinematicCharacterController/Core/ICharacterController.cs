@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KinematicCharacterController
-{
-    public interface ICharacterController
-    {
+namespace KinematicCharacterController {
+    public interface ICharacterController {
         /// <summary>
         /// This is called when the motor wants to know what its rotation should be right now
         /// </summary>

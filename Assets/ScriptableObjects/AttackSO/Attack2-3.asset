@@ -16,3 +16,4 @@ MonoBehaviour:
   damage: 20
   Sprite: {fileID: 0}
   attackName: Sword Swing
+  hasHitPause: 1

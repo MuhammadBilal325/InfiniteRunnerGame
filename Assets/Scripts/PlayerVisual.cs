@@ -8,17 +8,31 @@ public class PlayerVisual : MonoBehaviour {
     [SerializeField] private float attack1Duration;
     private Animator animator;
     [SerializeField] private Transform[] swordTips;
-    private string MOVEMENT_INPUT = "Movement";
-    private string ATTACK1_TRIGGER = "Attack1";
-    private string ATTACK2_TRIGGER = "Attack2";
-    private string ATTACK2_STAGE = "Attack2Stage";
-    private string SPRINT_PARAMETER = "SprintMultiplier";
-    private int attack2State = 0;
+    private readonly string MOVEMENT_INPUT = "Movement";
+    private readonly string ATTACK1_TRIGGER = "Attack1";
+    private readonly string ATTACK2_TRIGGER = "Attack2";
+    private readonly string ATTACK2_STAGE = "Attack2Stage";
+    private readonly string SPRINT_PARAMETER = "SprintMultiplier";
+    private float prevSpeed = 0;
+    private bool isHitPaused = false;
     private Coroutine attackSwordTrailCoroutine = null;
     private void Start() {
         animator = GetComponent<Animator>();
         Player.Instance.Attack1Pressed += Player_Attack1Pressed;
-        Player.Instance.Attack2Pressed += Player_Attack2Pressed; ;
+        Player.Instance.Attack2Pressed += Player_Attack2Pressed;
+        Player.Instance.StartHitPause += Player_StartHitPause;
+        Player.Instance.EndHitPause += Player_EndHitPause;
+    }
+
+    private void Player_EndHitPause(object sender, System.EventArgs e) {
+        animator.speed = prevSpeed;
+        isHitPaused = false;
+    }
+
+    private void Player_StartHitPause(object sender, System.EventArgs e) {
+        prevSpeed = animator.speed;
+        isHitPaused = true;
+        animator.speed = 0;
     }
 
     private void Player_Attack2Pressed(object sender, Player.AttackEventArgs e) {
@@ -49,7 +63,6 @@ public class PlayerVisual : MonoBehaviour {
     private void Attack2Visual(int attack2Stage) {
         animator.SetTrigger(ATTACK2_TRIGGER);
         animator.SetInteger(ATTACK2_STAGE, attack2Stage);
-        swordTips[attack2State].gameObject.SetActive(true);
         RenderSwordTrails(attack2Duration);
     }
 
@@ -64,7 +77,15 @@ public class PlayerVisual : MonoBehaviour {
 
     }
     IEnumerator AttackVisualStopSwordTrailCoroutine(float time) {
-        yield return new WaitForSeconds(time);
+        for (float i = 0; i < 1f; i += Time.deltaTime / time) {
+            if (isHitPaused) {
+                i -= Time.deltaTime / time;
+                yield return null;
+            }
+            else {
+                yield return null;
+            }
+        }
         for (int i = 0; i < swordTips.Length; i++) {
             swordTips[i].gameObject.SetActive(false);
         }

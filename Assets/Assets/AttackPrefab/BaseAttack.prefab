@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7593480067683659682}
   m_Layer: 6
   m_Name: BaseAttack
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

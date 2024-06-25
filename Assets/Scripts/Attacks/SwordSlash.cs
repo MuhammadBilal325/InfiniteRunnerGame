@@ -10,7 +10,7 @@ public class Attack2 : BaseAttack {
     }
 
     private IEnumerator DestroyAttack() {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         Destroy(this.gameObject);
     }
     // Update is called once per frame
@@ -26,6 +26,7 @@ public class Attack2 : BaseAttack {
 
     public override void Hit(IHittable hittable) {
         hittable.OnHit(this);
+        Player.Instance.HitPause();
         CameraMovementWithPlayer.Instance.ShakeCamera(0.1f, 0.1f);
         Destroy(gameObject);
     }
