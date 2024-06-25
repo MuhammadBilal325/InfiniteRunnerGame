@@ -12,7 +12,6 @@ public class CameraMovementWithPlayer : MonoBehaviour {
     private float validMaxPlayerPos;
     private float validMinPlayerPos;
     private float xAdjustment = 0f;
-    private float yAdjustment = 0f;
     private Coroutine cameraShakeRoutine;
     private void Awake() {
         Instance = this;
@@ -38,8 +37,9 @@ public class CameraMovementWithPlayer : MonoBehaviour {
     }
 
     public void ShakeCamera(float duration, float magnitude) {
-        if (cameraShakeRoutine == null) ;
-        cameraShakeRoutine = StartCoroutine(Shake(duration, magnitude));
+        if (cameraShakeRoutine == null) {
+            cameraShakeRoutine = StartCoroutine(Shake(duration, magnitude));
+        }
     }
 
     IEnumerator Shake(float duration, float magnitude) {

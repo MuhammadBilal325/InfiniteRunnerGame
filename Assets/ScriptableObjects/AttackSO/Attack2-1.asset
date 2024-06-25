@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47cecf4a451c84543a10dbf451894536, type: 3}
-  m_Name: Attack2
+  m_Name: Attack2-1
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5572611542005740562, guid: dd2a72c3c1d1f1d4bb7e58b2d14c7127, type: 3}
-  damage: 20
+  prefab: {fileID: 277664545223701817, guid: 4180cb5f280ba2e4ebd8e7c7ca75e20c, type: 3}
+  damage: 5
   Sprite: {fileID: 0}
   attackName: Sword Swing

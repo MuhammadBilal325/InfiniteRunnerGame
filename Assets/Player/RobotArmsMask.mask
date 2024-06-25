@@ -13,6 +13,14 @@ AvatarMask:
     m_Weight: 1
   - m_Path: Armature
     m_Weight: 0
+  - m_Path: Armature/HandIK.L
+    m_Weight: 0
+  - m_Path: Armature/HandIK.R
+    m_Weight: 0
+  - m_Path: Armature/HandIKPoleTarget.L
+    m_Weight: 0
+  - m_Path: Armature/HandIKPoleTarget.R
+    m_Weight: 0
   - m_Path: Armature/Leg1End.L
     m_Weight: 0
   - m_Path: Armature/Leg1End.R
@@ -32,14 +40,6 @@ AvatarMask:
   - m_Path: Armature/Master
     m_Weight: 0
   - m_Path: Armature/Master/Body
-    m_Weight: 0
-  - m_Path: Armature/Master/Body/HandIK.L
-    m_Weight: 0
-  - m_Path: Armature/Master/Body/HandIK.R
-    m_Weight: 0
-  - m_Path: Armature/Master/Body/HandIKPoleTarget.L
-    m_Weight: 0
-  - m_Path: Armature/Master/Body/HandIKPoleTarget.R
     m_Weight: 0
   - m_Path: Armature/Master/Body/Leg1Upper.L
     m_Weight: 0
@@ -89,17 +89,19 @@ AvatarMask:
     m_Weight: 0
   - m_Path: Armature/Master/Body/Leg4Upper.R/Leg4Middle.R/Leg4Foot.R
     m_Weight: 0
-  - m_Path: Armature/Master/Body/UpperArm.L
+  - m_Path: Armature/Master/Body/Torso
     m_Weight: 1
-  - m_Path: Armature/Master/Body/UpperArm.L/LowerArm.L
+  - m_Path: Armature/Master/Body/Torso/UpperArm.L
     m_Weight: 1
-  - m_Path: Armature/Master/Body/UpperArm.L/LowerArm.L/Hand.L
+  - m_Path: Armature/Master/Body/Torso/UpperArm.L/LowerArm.L
     m_Weight: 1
-  - m_Path: Armature/Master/Body/UpperArm.R
+  - m_Path: Armature/Master/Body/Torso/UpperArm.L/LowerArm.L/Hand.L
     m_Weight: 1
-  - m_Path: Armature/Master/Body/UpperArm.R/LowerArm.R
+  - m_Path: Armature/Master/Body/Torso/UpperArm.R
     m_Weight: 1
-  - m_Path: Armature/Master/Body/UpperArm.R/LowerArm.R/Hand.R
+  - m_Path: Armature/Master/Body/Torso/UpperArm.R/LowerArm.R
     m_Weight: 1
-  - m_Path: Cylinder
+  - m_Path: Armature/Master/Body/Torso/UpperArm.R/LowerArm.R/Hand.R
+    m_Weight: 1
+  - m_Path: Body
     m_Weight: 0

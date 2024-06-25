@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour, IHittable {
     // Start is called before the first frame update
     public event EventHandler OnHitEvent;
     public void OnHit(BaseAttack attack) {
+        OnHitEvent?.Invoke(this, EventArgs.Empty);
     }
 
     public float getHealth() {

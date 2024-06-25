@@ -12,33 +12,45 @@ public class Player : MonoBehaviour {
         JumpingDown,
     }
     public static Player Instance { get; private set; }
+    //Attacking 
     public event EventHandler Attack1Pressed;
-    public event EventHandler Attack2Pressed;
-    [SerializeField] private float attack1ResetTime;
+    public event EventHandler<AttackEventArgs> Attack2Pressed;
+    public class AttackEventArgs : EventArgs {
+        public int attackStage;
+    }
+    [SerializeField] private float attack1CoolDown;
+    [SerializeField] private AttackListSO attackList;
+    [SerializeField] private Transform attackPoint;
     [SerializeField] private float attack2ResetTime;
+    [SerializeField] private float attack2MidCoolDown;
+    [SerializeField] private float attack2EndCoolDown;
+    private float attack2ResetTimer;
+    private int attack2Stage = 0;
+    private int attack2MaxStages = 3;
+
     private float attackCooldown = 0f;
+    private Vector3 attackPointOffset;
+    private Vector3 attackPointInverseOffset;
+    //Movement
     [SerializeField] private float playerSpeed;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private AttackListSO attackList;
-    [SerializeField] private Transform attackPoint;
     [SerializeField] private Transform playerRotation;
     [SerializeField] private Vector3 gravity;
     [SerializeField] private Vector3 jumpVector;
     [SerializeField] private float jumpDamping;
     [SerializeField] private float gravityDamping;
     private CharacterController characterController;
-    private int direction;
-    private Quaternion forwardQuaternion;
-    private Quaternion backwardQuaternion;
     private float jumpLerp = 1f;
     private float gravityLerp = 1f;
     private Vector3 movement;
     private Vector3 oldPosition;
     private Vector3 newPosition;
-    private Vector3 attackPointOffset;
-    private Vector3 attackPointInverseOffset;
+    //Rotation
+    private int direction;
+    private Quaternion forwardQuaternion;
+    private Quaternion backwardQuaternion;
     private State state;
     private void Awake() {
         Instance = this;
@@ -61,14 +73,22 @@ public class Player : MonoBehaviour {
 
     private void GameInput_Attack2Pressed(object sender, EventArgs e) {
         if (attackCooldown <= 0) {
-            attackCooldown = attack2ResetTime;
+            //If attack cooldown has been reset
+            if (attack2Stage == attack2MaxStages - 1) {
+                attackCooldown = attack2EndCoolDown;
+            }
+            else
+                attackCooldown = attack2MidCoolDown;
+            attack2ResetTimer = 0;
             Attack2();
+            attack2Stage++;
+            attack2Stage %= attack2MaxStages;
         }
     }
 
     private void GameInput_Attack1Pressed(object sender, EventArgs e) {
         if (attackCooldown <= 0) {
-            attackCooldown = attack1ResetTime;
+            attackCooldown = attack1CoolDown;
             Attack1();
         }
     }
@@ -84,6 +104,13 @@ public class Player : MonoBehaviour {
     void Update() {
         if (attackCooldown > 0) {
             attackCooldown -= Time.deltaTime;
+        }
+        if (attack2ResetTimer < attack2ResetTime) {
+            attack2ResetTimer += Time.deltaTime;
+        }
+        else {
+            attack2ResetTimer = attack2ResetTime;
+            attack2Stage = 0;
         }
         movement = new Vector3(GameInput.Instance.GetMovementInput(), 0, 0);
         direction = PointerXRelativeToPlayer();
@@ -102,8 +129,16 @@ public class Player : MonoBehaviour {
     }
 
     private void Attack2() {
-        Attack2Pressed?.Invoke(this, EventArgs.Empty);
-        Instantiate(attackList.attacks[1].prefab, attackPoint.position, attackPoint.rotation);
+        if (attack2Stage == 0) {
+            Instantiate(attackList.attacks[1].prefab, attackPoint.position, attackPoint.rotation);
+        }
+        else if (attack2Stage == 1) {
+            Instantiate(attackList.attacks[2].prefab, attackPoint.position, attackPoint.rotation);
+        }
+        else if (attack2Stage == 2) {
+            Instantiate(attackList.attacks[3].prefab, attackPoint.position, attackPoint.rotation);
+        }
+        Attack2Pressed?.Invoke(this, new AttackEventArgs { attackStage = attack2Stage });
     }
     private void HandleRotation() {
         if (direction == 1) {

@@ -38581,16 +38581,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3b8ac6da6a15047861317cc15ebcf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack1ResetTime: 0.4
-  attack2ResetTime: 0.25
+  attack1CoolDown: 0.4
+  attackList: {fileID: 11400000, guid: cbb8047f1e311e645b7c02a70a4e1281, type: 2}
+  attackPoint: {fileID: 884313025}
+  attack2ResetTime: 0.7
+  attack2MidCoolDown: 0.35
+  attack2EndCoolDown: 0.6
   playerSpeed: 5
   sprintSpeed: 10
   rotationSpeed: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  attackList: {fileID: 11400000, guid: cbb8047f1e311e645b7c02a70a4e1281, type: 2}
-  attackPoint: {fileID: 884313025}
   playerRotation: {fileID: 1624582892}
   gravity: {x: 0, y: -4.9, z: 0}
   jumpVector: {x: 0, y: 0.25, z: 0}
