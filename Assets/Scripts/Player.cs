@@ -7,14 +7,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, KinematicCharacterController.ICharacterController {
 
-    private enum State {
-        Grounded,
-        JumpingUp,
-        JumpingDown,
-    }
     public static Player Instance { get; private set; }
     //Attacking 
-
+    #region Attacks
     public event EventHandler StartHitPause;
     public event EventHandler EndHitPause;
     public event EventHandler Attack1Pressed;
@@ -44,8 +39,9 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
     private float attackCooldown = 0f;
     private Vector3 attackPointOffset;
     private Vector3 attackPointInverseOffset;
+    #endregion
     //Movement
-    [SerializeField] private float playerSpeed;
+    #region Movement
     [SerializeField] private float maxStableMoveSpeed;
     [SerializeField] private float stableMovementSharpness;
     [SerializeField] private float maxAirMoveSpeed;
@@ -56,6 +52,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
     private KinematicCharacterMotor Motor;
     private readonly string ATTACK_TAG = "Attack";
     private Vector3 movement;
+    #endregion
     //Rotation
     [SerializeField] private float rotationSpeed;
     private int direction;
