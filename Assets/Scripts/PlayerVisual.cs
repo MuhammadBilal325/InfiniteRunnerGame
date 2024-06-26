@@ -30,6 +30,9 @@ public class PlayerVisual : MonoBehaviour {
     }
 
     private void Player_StartHitPause(object sender, System.EventArgs e) {
+        if (isHitPaused) {
+            return;
+        }
         prevSpeed = animator.speed;
         isHitPaused = true;
         animator.speed = 0;

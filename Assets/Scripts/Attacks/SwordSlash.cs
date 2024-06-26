@@ -28,6 +28,5 @@ public class Attack2 : BaseAttack {
         hittable.OnHit(this);
         Player.Instance.HitPause();
         CameraMovementWithPlayer.Instance.AddTrauma(1);
-        Destroy(gameObject);
     }
 }

@@ -341,6 +341,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -395,6 +400,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9776,6 +9786,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
       propertyPath: awarenessSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -13974,6 +13989,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
       propertyPath: awarenessSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -16262,25 +16282,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: awarenessSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.67
-      objectReference: {fileID: 0}
-    - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
+      value: 8.23
       objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
@@ -16321,11 +16326,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25808,6 +25808,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
       propertyPath: awarenessSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -26619,6 +26624,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: awarenessSpeed
@@ -30498,6 +30508,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: awarenessSpeed
@@ -36314,6 +36329,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
+      propertyPath: decisionDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
       propertyPath: awarenessSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -38668,7 +38688,7 @@ MonoBehaviour:
   MaxStableSlopeAngle: 60
   StableGroundLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4294967295
   DiscreteCollisionEvents: 0
   StepHandling: 1
   MaxStepHeight: 0.5
