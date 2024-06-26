@@ -341,11 +341,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1157444854545238181, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: awarenessSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -400,11 +395,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6200,8 +6190,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03341685, y: -0, z: -0, w: 0.9994415}
-  m_LocalPosition: {x: 5.9039464, y: 1.4783962, z: -18.808554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9843,6 +9833,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16275,12 +16270,12 @@ PrefabInstance:
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.75
+      value: 9.8
       objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.736
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 1478883871843281575, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
         type: 3}
@@ -25772,9 +25767,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0122cc5d1586a46afd6d0f5bcb43d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 2094446900}
-  safeDistance: 2
+  playerTransform: {fileID: 2094446900}
   shakeEmpty: {fileID: 849921877}
+  firstThreshold: -4
+  secondThreshold: -3
+  cameraSnapSpeed: 8
+  maxYaw: 0
+  maxPitch: 1.5
+  maxRoll: 1.5
+  maxOffsetX: 0.5
+  maxOffsetY: 0.5
+  noiseSeed: 0
+  traumaDecreaseFactor: 5
+  noiseFrequency: 5
+  shakeSnapSpeed: 10
+  shakeMagnitude: 1
 --- !u!4 &1440479135
 Transform:
   m_ObjectHideFlags: 0
@@ -25783,8 +25790,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440479133}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.23, y: 0.69, z: -0.37144724}
+  m_LocalRotation: {x: -0.03341685, y: 0, z: 0, w: 0.9994415}
+  m_LocalPosition: {x: 5.88, y: 2.1683962, z: -19.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25858,6 +25865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26666,6 +26678,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30540,6 +30557,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36349,6 +36371,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BasicEnemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466843290267700405, guid: 29e226b885c547a4b9e1a5e91c69fa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

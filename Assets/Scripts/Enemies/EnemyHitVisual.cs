@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyHitVisual : MonoBehaviour {
     [SerializeField] private BaseEnemy baseEnemy;
     [SerializeField] private float flashSpeed;
+    [SerializeField, ColorUsage(hdr: true, showAlpha: true)] private Color flashColor;
     private MeshRenderer meshRenderer;
     private Color originalEmissionColor;
     private Color emissionColor;
-    private Color flashColor;
     private string EMISSION_COLOR = "_EmissionColor";
     private float flashLerp = 1f;
     private bool isFlashing = false;
@@ -17,7 +17,6 @@ public class EnemyHitVisual : MonoBehaviour {
         meshRenderer = GetComponent<MeshRenderer>();
         originalEmissionColor = meshRenderer.material.GetColor("_EmissionColor");
         meshRenderer.material.EnableKeyword("_EMISSION");
-        flashColor = Color.red;
         baseEnemy.OnHitEvent += BaseEnemy_OnHitEvent;
     }
 

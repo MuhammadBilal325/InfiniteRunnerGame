@@ -258,7 +258,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
 
 
 
-    public int GetDirection() {
+    public int GetRotationDirection() {
         return direction;
     }
     public int GetMovementDirection() {

@@ -14,12 +14,12 @@ public class Attack1 : BaseAttack {
     private void Awake() {
         instancePoint = transform.position;
         int movement = Player.Instance.GetMovementDirection();
-        direction = Player.Instance.GetDirection();
+        direction = Player.Instance.GetRotationDirection();
         if (movement == 1) {
             addSpeed = 2;
         }
         //Shake Camera on Spawn
-        CameraMovementWithPlayer.Instance.ShakeCamera(0.1f, 0.1f);
+        CameraMovementWithPlayer.Instance.AddTrauma(1);
     }
 
     // Update is called once per frame
