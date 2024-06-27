@@ -9,6 +9,8 @@ public class Obstacle : MonoBehaviour, IHittable {
     public void OnHit(BaseAttack attack) {
         OnHitEvent?.Invoke(this, EventArgs.Empty);
     }
+    public void OnHit() {
+    }
 
     public float getHealth() {
         return 10000;

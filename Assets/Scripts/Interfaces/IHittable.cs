@@ -8,6 +8,7 @@ public interface IHittable {
     public event EventHandler OnHitEvent;
     void OnHit(BaseAttack attack);
 
+    void OnHit();
     public float getHealth();
     public float getMaxHealth();
 }

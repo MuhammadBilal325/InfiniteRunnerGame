@@ -25791,7 +25791,7 @@ Transform:
   m_GameObject: {fileID: 1440479133}
   serializedVersion: 2
   m_LocalRotation: {x: -0.03341685, y: 0, z: 0, w: 0.9994415}
-  m_LocalPosition: {x: 5.88, y: 2.1683962, z: -19.18}
+  m_LocalPosition: {x: 5.88, y: 2.1683962, z: -26.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38654,7 +38654,6 @@ MonoBehaviour:
   attack2MidDelay: 0.05
   attack2EndCoolDown: 0.6
   attack2EndDelay: 0.13
-  playerSpeed: -10.41
   maxStableMoveSpeed: 10
   stableMovementSharpness: 8
   maxAirMoveSpeed: 4

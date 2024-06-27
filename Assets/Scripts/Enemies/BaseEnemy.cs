@@ -19,6 +19,10 @@ public class BaseEnemy : MonoBehaviour, IHittable {
             Destroy(gameObject);
         }
     }
+
+    public virtual void OnHit() {
+        OnHitEvent?.Invoke(this, EventArgs.Empty);
+    }
     public virtual float getHealth() {
         return health;
     }

@@ -406,8 +406,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  attackDistance: 10
+  attackXOffset: 1
+  attackYOffset: 0.5
+  attackListSO: {fileID: 11400000, guid: 0b7fa541b38cc8a43b9fd70c02313ae2, type: 2}
+  attackDelay: 4
   playerDistance: 3
-  decisionDelay: 1
+  decisionDelay: 0.1
   maxStableMoveSpeed: 5
   stableMovementSharpness: 8
   maxAirMoveSpeed: 4

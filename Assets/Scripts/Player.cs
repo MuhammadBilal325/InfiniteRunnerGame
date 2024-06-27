@@ -8,6 +8,11 @@ using UnityEngine;
 public class Player : MonoBehaviour, KinematicCharacterController.ICharacterController {
 
     public static Player Instance { get; private set; }
+    //Health and IHittable
+    #region Health
+    public event EventHandler OnHitEvent;
+    #endregion
+
     //Attacking 
     #region Attacks
     public event EventHandler StartHitPause;
@@ -50,16 +55,17 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
     [SerializeField] private Transform playerRotation;
     [SerializeField] private Vector3 gravity;
     private KinematicCharacterMotor Motor;
-    private readonly string ATTACK_TAG = "Attack";
     private Vector3 movement;
     #endregion
     //Rotation
+    #region Rotation
     [SerializeField] private float rotationSpeed;
     private int direction;
     private Quaternion forwardQuaternion;
     private Quaternion backwardQuaternion;
-
+    #endregion
     //Jumping
+    #region Jumping
     public event EventHandler PlayerJumped;
     public event EventHandler PlayerLanded;
     [SerializeField] private bool AllowJumpingWhenSliding = false;
@@ -71,7 +77,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
     private bool _jumpedThisFrame = false;
     private float _timeSinceJumpRequested = Mathf.Infinity;
     private float _timeSinceLastAbleToJump = 0f;
-
+    #endregion
     private void Awake() {
         Instance = this;
 
@@ -91,7 +97,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
         GameInput.Instance.Attack1Pressed += GameInput_Attack1Pressed;
         GameInput.Instance.Attack2Pressed += GameInput_Attack2Pressed;
     }
-
+    #region GameInput
     private void GameInput_Attack2Pressed(object sender, EventArgs e) {
         if (!allowAttacks) {
             return;
@@ -127,6 +133,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
         }
     }
 
+    #endregion
     // Update is called once per frame
     void Update() {
         //Dont puase attackCooldown during hitpause to maintain snappy feel
@@ -162,6 +169,7 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
         }
     }
 
+    #region Attack
     private void Attack1() {
         Attack1Pressed?.Invoke(this, EventArgs.Empty);
         if (attackCoroutine != null)
@@ -188,7 +196,9 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
         Instantiate(prefab, attackPoint.position, attackPoint.rotation);
         attackCoroutine = null;
     }
+    #endregion
 
+    #region KinematicCharacterController
     public void UpdateRotation(ref Quaternion currentRotation, float deltaTime) {
 
     }
@@ -255,25 +265,6 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
 
 
 
-    public int GetRotationDirection() {
-        return direction;
-    }
-    public int GetMovementDirection() {
-        return (int)GameInput.Instance.GetMovementInput() * direction;
-    }
-    public bool IsSprinting() {
-        return GameInput.Instance.GetSprintInput() > 0;
-    }
-    private int PointerXRelativeToPlayer() {
-        Vector3 pointer = Input.mousePosition;
-        pointer.z = transform.position.z - Camera.main.transform.position.z;
-        pointer = Camera.main.ScreenToWorldPoint(pointer);
-        pointer.z = 0;
-        Vector3 player = transform.position;
-        player.z = 0;
-        Vector3 direction = pointer - player;
-        return direction.x > 0 ? 1 : -1;
-    }
 
 
     public void BeforeCharacterUpdate(float deltaTime) { }
@@ -308,7 +299,17 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
             }
         }
     }
+    public bool IsColliderValidForCollisions(Collider coll) {
+        return !(coll.CompareTag(Tags.ATTACK_TAG) || coll.CompareTag(Tags.ENEMY_ATTACK_TAG));
+    }
+    public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
+    public void OnDiscreteCollisionDetected(Collider hitCollider) { }
 
+    #endregion
+
+    #region HitPause
     public void PausePlayerAttackTimers() {
         attackTimersPaused = true;
         allowAttacks = false;
@@ -332,11 +333,42 @@ public class Player : MonoBehaviour, KinematicCharacterController.ICharacterCont
         UnPausePlayerAttackTimers();
         hitPauseCoroutine = null;
     }
-    public bool IsColliderValidForCollisions(Collider coll) {
-        return !coll.CompareTag(ATTACK_TAG);
+    #endregion
+
+
+    #region IHittable
+    public void OnHit(BaseEnemyAttack attack) {
+
+        //Debug.Log("Player Hit by " + attack.GetName());
     }
-    public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
-    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
-    public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
-    public void OnDiscreteCollisionDetected(Collider hitCollider) { }
+
+    public float getHealth() {
+        return 100;
+    }
+    public float getMaxHealth() {
+        return 100;
+    }
+
+    #endregion
+    public int GetRotationDirection() {
+        return direction;
+    }
+    public int GetMovementDirection() {
+        return (int)GameInput.Instance.GetMovementInput() * direction;
+    }
+    public bool IsSprinting() {
+        return GameInput.Instance.GetSprintInput() > 0;
+    }
+    private int PointerXRelativeToPlayer() {
+        Vector3 pointer = Input.mousePosition;
+        pointer.z = transform.position.z - Camera.main.transform.position.z;
+        pointer = Camera.main.ScreenToWorldPoint(pointer);
+        pointer.z = 0;
+        Vector3 player = transform.position;
+        player.z = 0;
+        Vector3 direction = pointer - player;
+        return direction.x > 0 ? 1 : -1;
+    }
+
+
 }
